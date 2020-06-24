@@ -1,22 +1,18 @@
 import React, {useCallback} from 'react';
 import {useDropzone} from 'react-dropzone';
+import "./styles.css";
 
 const Dropzone = () => {
     const onDrop = useCallback(acceptedFiles => {
-        console.log(acceptedFiles);
+        
     }, []);
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
 
     return(
-        <div {... getRootProps()}>
+        <div className="dropzone" {... getRootProps()}>
             <input {...getInputProps()}/>
-
-            {
-                isDragActive ?
-                <p>Arraste os itens aqui</p> :
-                <p>Arraste os arquivos aqui ou clique para escolher</p>
-            }
+            <p>Imagem do estabelecimento</p>           
         </div>
     )
 }
