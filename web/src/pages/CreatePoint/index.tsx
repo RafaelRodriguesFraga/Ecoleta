@@ -54,6 +54,8 @@ const CreatePoint = () => {
     whatsapp: "",
   });
 
+  const [selectedFile, setSelectedFile] = useState<File>();
+
   const history = useHistory();
   /*
     Ao modificar algo da pagina todo componente é renderizado de novo.
@@ -133,7 +135,7 @@ const CreatePoint = () => {
   }
 
   async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
+    event.preventDefault();    
 
     const { name, email, whatsapp } = formData;
     const uf = selectedUf;
@@ -176,7 +178,7 @@ const CreatePoint = () => {
           Cadastro do <br /> ponto de coleta
         </h1>
 
-        <Dropzone/>
+        <Dropzone onFileUploaded={setSelectedFile}/>
 
         <fieldset>
           <legend>
