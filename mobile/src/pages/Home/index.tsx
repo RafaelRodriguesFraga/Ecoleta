@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Feather as Icon } from "@expo/vector-icons";
 import {
   View,
@@ -11,19 +11,65 @@ import {
 } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import RNPickerSelect from "react-native-picker-select";
+import axios from "axios";
+
+interface IBGEUFResponse {
+  sigla: string;
+}
+
+interface IBGECityResponse {
+  nome: string;
+}
 
 const Home = () => {
-  const [uf, setUf] = useState("");
-  const [city, setCity] = useState("");
-
   //Serve para "navegar" entre as telas
   const navigation = useNavigation();
 
+  const [ufs, setUfs] = useState<string[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
+
+  const [selectedUf, setSelectedUf] = useState("0");
+  const [selectedCity, setSelectedCity] = useState("0");
+
+  useEffect(() => {
+    axios
+      .get<IBGEUFResponse[]>(
+        "https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome"
+      )
+      .then((response) => {
+        const ufInitials = response.data.map((uf) => uf.sigla);
+        setUfs(ufInitials);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (selectedUf === "0") {
+      return;
+    }
+
+    axios
+      .get<IBGECityResponse[]>(
+        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/distritos?orderBy=nome`
+      )
+      .then((response) => {
+        const cityNames = response.data.map((city) => city.nome);
+        setCities(cityNames);
+      });
+  }, [selectedUf]);
+
   function handleNavigateToPoints() {
     navigation.navigate("Points", {
-      uf,
-      city,
+      uf: selectedUf,
+      city: selectedCity,
     });
+  }
+
+  function handleSelectUf(uf: string) {
+    setSelectedUf(uf);
+  }
+  function handleSelectCity(city: string) {
+    setSelectedCity(city);
   }
 
   return (
@@ -46,24 +92,60 @@ const Home = () => {
         </View>
 
         <View style={styles.footer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite a UF"
-            value={uf}
-            // Mesma coisa que {text => setUf(text)}
-            onChangeText={setUf}
-            maxLength={2}
-            autoCapitalize="characters"
-            autoCorrect={false}
+          <RNPickerSelect
+            placeholder={{ label: "Selecione um estado" }}
+            Icon={() => <Icon name="chevron-down" size={20} color="#6C6C80" />}
+            onValueChange={(value) => handleSelectUf(value)}
+            items={ufs.map((uf) => ({ label: uf, value: uf }))}
+            style={{
+              placeholder: {
+                fontFamily: "Roboto_400Regular",
+                alignItems: "center",
+                fontSize: 16,
+                color: "#6C6C80",
+              },
+
+              viewContainer: {
+                height: 60,
+                backgroundColor: "#FFFFFF",
+                borderRadius: 10,
+                marginBottom: 8,
+                paddingHorizontal: 14,
+                paddingTop: 5,
+              },
+
+              iconContainer: {
+                padding: 20,
+              },
+            }}
           />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Digite a Cidade"
-            value={city}
-            // Mesma coisa que {text => setCity(text)}
-            onChangeText={setCity}
-            autoCorrect={false}
+          <RNPickerSelect
+            placeholder={{ label: "Selecione uma cidade" }}
+            Icon={() => <Icon name="chevron-down" size={20} color="#6C6C80" />}
+            onValueChange={(value) => handleSelectCity(value)}
+            items={cities.map((city) => ({ label: city, value: city }))}
+            style={{
+              placeholder: {
+                fontFamily: "Roboto_400Regular",
+                alignItems: "center",
+                fontSize: 16,
+                color: "#6C6C80",
+              },
+
+              viewContainer: {
+                height: 60,
+                backgroundColor: "#FFFFFF",
+                borderRadius: 10,
+                marginBottom: 8,
+                paddingHorizontal: 14,
+                paddingTop: 5,
+              },
+
+              iconContainer: {
+                padding: 20,
+              },
+            }}
           />
 
           <RectButton style={styles.button} onPress={handleNavigateToPoints}>
