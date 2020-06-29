@@ -55,7 +55,7 @@
 |3  | [Como usar](#como-usar) |
 |4  | [Preparando o banco de dados](#preparando-o-banco-de-dados) |
 |5  | [Executando a API](#executando-a-api) |
-|   | **Postman/Insomnia**Z
+|   | **Postman/Insomnia**
 |6 | [Utilizando a API](#utilizando-a-api) |
 |7 | [Cadastrando um Ponto de Coleta](#cadastrando-um-ponto-de-coleta) |
 |8 | [Listando um Ponto de Coleta](#listando-um-ponto-de-coleta) |
