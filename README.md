@@ -63,7 +63,7 @@
 |   | **O Site (Pasta Web)**
 |10 |[Executando a Aplicação Web](#executando-a-aplicação-web) |
 |   | **O App (Pasta Mobile)**|
-|11 |[Instalando o expo](#instalando-o-expo) |
+|11 |[Instalando o Expo](#instalando-o-expo) |
 |12 |[Executando em um dispositivo real](#executando-em-um-dispositivo-real) |
 
 _Obs: O uso de toda aplicação será feita localmente. Futuramente o projeto estará em produção_
@@ -145,7 +145,7 @@ _Obs: O uso de toda aplicação será feita localmente. Futuramente o projeto es
 
     ![insomnia](https://user-images.githubusercontent.com/29709111/85936472-95da2a80-b8d1-11ea-920a-84588eb8430e.png)
 
-    No topo está o metodo que estamos usando (GET) e a rota  ```localhost:3333/points```. Na esquerda, a resposta que está sendo mostrada após a execução.
+    No topo está o metodo que estamos usando (GET) e a rota  ```localhost:3333/itens```. Na esquerda, a resposta que está sendo mostrada após a execução.
 
 **[⬆ Voltar ao topo](#índice)**  
 
@@ -153,7 +153,8 @@ _Obs: O uso de toda aplicação será feita localmente. Futuramente o projeto es
 
     Dentro do Software da sua escolha, escolha como metodo o POST e  coloque **```localhost:3333/points```** na url. Onde possui Body (geralmente é abaixo do método e da rota) mude para Multipart Form. Cada registro possui campos com o tipo chave/valor, onde a chave é o que você quer cadastrar e o valor é a descrição da chave. Abaixo um exemplo:
     
-    ```name: Mercado Teste MySQL
+    ```
+    name: Mercado Teste MySQL
     email: mercadoteste@gmail.com
     whatsapp: 2799999999
     latitude: -20.2645188
